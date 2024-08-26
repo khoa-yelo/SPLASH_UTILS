@@ -1,0 +1,5 @@
+logs/
+feature_annotation/logs/*
+temp/
+*slurm*
+envs/*
