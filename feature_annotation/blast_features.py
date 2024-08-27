@@ -38,9 +38,10 @@ def find_overlapping_features(record, window_start, window_end):
         if overlap:
             overlapping_features.append({
                 "type": feature.type,
-                "start": feature_start,
-                "end": feature_end,
-                "qualifiers": feature.qualifiers
+                "start": str(feature_start),
+                "end": str(feature_end),
+                "gene": feature.qualifiers.get("gene"),
+                "product": feature.qualifiers.get("product")
             })
 
     return overlapping_features
@@ -48,7 +49,8 @@ def find_overlapping_features(record, window_start, window_end):
 def featurize_blast_out(blast_out, window=10000):
     df = pd.read_csv(blast_out, sep="\t", header=None)
     df.columns = ["query", "subject", "identity", "alignment_length", "mismatches", "gap_opens",\
-                     "q_start", "q_end", "s_start", "s_end", "evalue", "bit_score", "sgi", "sacc", "slen", "staxids", "stitle"]
+                     "q_start", "q_end", "s_start", "s_end", "evalue", "bit_score", "sgi", \
+                        "sacc", "slen", "staxids", "stitle"]
     df["features"] = None
     df[f"features_{window}_window"] = None
     sacc_records = {}
@@ -72,7 +74,7 @@ if __name__ == "__main__":
     args = common.parse_args()
     config, split_folder, lookup_folder, blast_folder, compactor_folder = common.preflight(args.config_path)
     if not os.path.exists(blast_folder):
-        print(f"Blast folder {blast_folder} does not exist. Exiting. Blast option = {config["blast"]}")
+        print(f"Blast folder {blast_folder} does not exist. Exiting. Blast option = {config['blast']}")
         sys.exit(0)
 
     blast_outs = [join(blast_folder, f) for f in os.listdir(blast_folder) if f.endswith(".blastout.tsv")]
