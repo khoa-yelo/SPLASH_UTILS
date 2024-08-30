@@ -19,7 +19,7 @@ def run_blast(splitted_fasta, blast_folder, config):
         if i % SLURM_ARRAY_TASK_COUNT != SLURM_ARRAY_TASK_ID:
             continue
         blast_out = join(blast_folder, basename(f).split(".")[0] + ".blastout.tsv")
-        cmd = f"blastn -outfmt '{fmt}' -query {f} -remote -db nt -out {blast_out} -evalue 0.1 -task blastn -dust no -word_size 24 -reward 1 -penalty -3 -max_target_seqs 1"
+        cmd = f"blastn -outfmt '{fmt}' -query {f} -remote -db nt -out {blast_out} -evalue 0.1 -task blastn -dust no -word_size 24 -reward 1 -penalty -3 -max_target_seqs 4"
         subprocess.run(cmd, shell = True, check=True)
         print(f"Blast complete for {f}")
 
