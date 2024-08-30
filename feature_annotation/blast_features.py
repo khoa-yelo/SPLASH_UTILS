@@ -41,7 +41,8 @@ def find_overlapping_features(record, window_start, window_end):
                 "start": str(feature_start),
                 "end": str(feature_end),
                 "gene": feature.qualifiers.get("gene"),
-                "product": feature.qualifiers.get("product")
+                "product": feature.qualifiers.get("product"),
+                "protein_seq": feature.qualifiers.get("translation")
             })
 
     return overlapping_features

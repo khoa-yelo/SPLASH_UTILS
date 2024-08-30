@@ -22,9 +22,6 @@ def run_blast(splitted_fasta, blast_folder, config):
         cmd = f"blastn -outfmt '{fmt}' -query {f} -remote -db nt -out {blast_out} -evalue 0.1 -task blastn -dust no -word_size 24 -reward 1 -penalty -3 -max_target_seqs 1"
         subprocess.run(cmd, shell = True, check=True)
         print(f"Blast complete for {f}")
-        # df_features = featurize_blast_out(blast_out, config["blast_window"])
-        # blast_feat_out = join(blast_folder, basename(f).split(".")[0] + ".blastfeatout.tsv")
-        # df_features.to_csv(blast_feat_out, index = None, sep = "\t")
 
 if __name__ == "__main__":
     args = common.parse_args()
