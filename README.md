@@ -12,22 +12,33 @@ singularity pull docker://scr.svc.stanford.edu/khoang99/containers/python-sequti
 ```
 
 
-config.json
+Example config.json
 
 ```
 {   
-    "lookup": true,
-    "blast": true,
-    "compactor_pfam": false,
-    "lookup_tables": ["/oak/stanford/groups/horence/khoa/scratch/data/lookup_table/microbe_lookup_with_microbe_trnx.slt", 
-        "/oak/stanford/groups/horence/khoa/scratch/data/lookup_table/microbial_transcriptomes.slt"],
+    "lookup": false,
+    "blast": false,
+    "compactor_pfam": true,
+    "lookup_tables": ["/oak/stanford/groups/horence/khoa/scratch/data/lookup_table/tables/082924/common_microbe_lookup.slt", 
+        "/oak/stanford/groups/horence/khoa/scratch/data/lookup_table/tables/082924/microbes_trnx.slt",
+        "/oak/stanford/groups/horence/khoa/scratch/data/lookup_table/tables/082924/artifacts.slt",
+        "/oak/stanford/groups/horence/khoa/scratch/data/lookup_table/tables/082924/common_microbe_w_trnx.slt"],
     "blast_window": 5000,
-    "splash_bin": "/oak/stanford/groups/horence/khoa/scratch/build/splash2.6.1",
-    "input_file": "/oak/stanford/groups/horence/khoa/scratch/play/selected_anchors_top10perc_dedup_list_with_id.fasta",
-    "output_folder": "/oak/stanford/groups/horence/khoa/scratch/data/lookup_table/35kouts_3"
+    "input_file": "/oak/stanford/groups/horence/khoa/scratch/data/splash_outs/candida/cluster_extenders.fasta",
+    "input_meta": null,
+    "output_folder": "/oak/stanford/groups/horence/khoa/scratch/data/splash_outs/candida/cluster_extenders_annotations",
+    "compactor_args":{
+        "fastq_files": "/oak/stanford/groups/horence/khoa/scratch/data/splash_outs/candida/fastqs.txt",
+        "anchor_list": "/oak/stanford/groups/horence/khoa/scratch/data/splash_outs/candida/cluster_anchors.anchorlist",
+        "output_file": "/oak/stanford/groups/horence/khoa/scratch/data/splash_outs/candida/cluster_anchors.compactors.out.fasta"
+    }
 }
 ```
 
 
 Run annotate.sh
+
+```
+./annotate.sh confg.json
+```
 
