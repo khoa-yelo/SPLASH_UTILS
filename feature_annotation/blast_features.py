@@ -23,7 +23,7 @@ def fetch_sequence(seq_id):
         except:
             time.sleep(5)
     return record
-
+ 
 def find_overlapping_features(record, window_start, window_end):
     overlapping_features = []
     for feature in record.features:
@@ -86,6 +86,9 @@ if __name__ == "__main__":
         i+=1
         if i % SLURM_ARRAY_TASK_COUNT != SLURM_ARRAY_TASK_ID:
             continue
+        # if blast_feat_out exists and has data, skip
+        if os.path.exists(blast_feat_out) and os.path.getsize(blast_feat_out) > 0:
+            print(f"Output file {blast_feat_out} exists and has data. Skipping.")
         df_features = featurize_blast_out(blast_out, config["blast_window"])
         df_features.to_csv(blast_feat_out, index = None, sep = "\t")
         print(f"Featurize blast output complete for {blast_out}. Output file: {blast_feat_out}")
