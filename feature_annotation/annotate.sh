@@ -49,7 +49,7 @@ JOB_ID3=$(sbatch --parsable \
                  --array=0-$NUM_ARRAY \
                  --wrap="$ENV python blast_features.py $CONFIG_FILE")
 echo "Submitted blast feature job with ID: $JOB_ID3"
-Run compactors
+# Run compactors
 JOB_ID4=$(sbatch --parsable \
                  --partition=horence,owners \
                  --time=40:00:00 \
