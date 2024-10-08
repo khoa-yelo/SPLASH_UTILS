@@ -1,0 +1,18 @@
+{   
+    "lookup": true,
+    "blast": true,
+    "compactor_pfam": false,
+    "lookup_tables": ["/oak/stanford/groups/horence/khoa/scratch/data/lookup_table/tables/082924/common_microbe_lookup.slt", 
+        "/oak/stanford/groups/horence/khoa/scratch/data/lookup_table/tables/082924/microbes_trnx.slt",
+        "/oak/stanford/groups/horence/khoa/scratch/data/lookup_table/tables/082924/artifacts.slt",
+        "/oak/stanford/groups/horence/khoa/scratch/data/lookup_table/tables/082924/common_microbe_w_trnx.slt"],
+    "blast_window": 5000,
+    "input_file": "/oak/stanford/groups/horence/khoa/scratch/data/splash_outs/danny/aztreonam_glmnet_significant_anchors.fasta",
+    "input_meta": null,
+    "output_folder": "/oak/stanford/groups/horence/khoa/scratch/data/splash_outs/danny/aztreonam_glmnet_significant_anchors_annotation",
+    "compactor_args":{
+        "fastq_files": null,
+        "anchor_list": null,
+        "output_file": null
+    }
+}

@@ -1,0 +1,11 @@
+{   
+    "lookup": true,
+    "blast": true,
+    "compactor_pfam": false,
+    "lookup_tables": ["/oak/stanford/groups/horence/khoa/scratch/data/lookup_table/tables/082724/microbe_lookup.slt", 
+        "/oak/stanford/groups/horence/khoa/scratch/data/lookup_table/tables/082724/microbe_trnx.slt"],
+    "blast_window": 5000,
+    "splash_bin": "/oak/stanford/groups/horence/khoa/scratch/build/splash2.6.1",
+    "input_file": "/oak/stanford/groups/horence/khoa/scratch/data/splash_outs/candida/onehot_glmnet_kmers.fasta",
+    "output_folder": "/oak/stanford/groups/horence/khoa/scratch/data/splash_outs/candida/onehot_glmnet_kmers_annotation"
+}
