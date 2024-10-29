@@ -1,6 +1,6 @@
 #!/bin/bash
 CONFIG_FILE="$1"
-NUM_ARRAY=50
+export NUM_ARRAY=50
 export IMAGE="/oak/stanford/groups/horence/khoa/scratch/repos/SPLASH_UTILS/envs/python-sequtils-blast-splash-pfam_latest.sif"
 export REPO="/oak/stanford/groups/horence/khoa/scratch/repos/SPLASH_UTILS"
 export ENV="singularity run -B $REPO,$OAK $IMAGE"
@@ -37,10 +37,11 @@ JOB_ID2=$(sbatch --parsable \
                  --array=0-$NUM_ARRAY \
                  --wrap="$ENV python run_blast.py $CONFIG_FILE")
 echo "Submitted blast job with ID: $JOB_ID2"
+#                  --dependency=afterok:$JOB_ID2 \
+
 ### Run blast features
 JOB_ID3=$(sbatch --parsable \
                  --partition=horence,owners \
-                 --dependency=afterok:$JOB_ID2 \
                  --time=2:00:00 \
                  --mem=10GB \
                  --job-name=blast_feat \
@@ -49,6 +50,18 @@ JOB_ID3=$(sbatch --parsable \
                  --array=0-$NUM_ARRAY \
                  --wrap="$ENV python blast_features.py $CONFIG_FILE")
 echo "Submitted blast feature job with ID: $JOB_ID3"
+#                  --dependency=afterok:$JOB_ID3:$JOB_ID1 \
+
+# Summarize blast and lookup
+JOB_ID6=$(sbatch --parsable \
+                 --partition=horence,owners \
+                 --time=2:00:00 \
+                 --mem=20GB \
+                 --job-name=summary \
+                 --output=$LOG_DIR/summary_%j.out \
+                 --error=$LOG_DIR/summary_%j.err \
+                 --wrap="$ENV python summarize.py $CONFIG_FILE")
+
 # Run compactors
 JOB_ID4=$(sbatch --parsable \
                  --partition=horence,owners \
@@ -73,3 +86,4 @@ JOB_ID5=$(sbatch --parsable \
                  --error=$LOG_DIR/pfam_%A_%a.err \
                  --wrap="$ENV python run_pfam.py $CONFIG_FILE")
 echo "Submitted pfam job with ID: $JOB_ID5"
+

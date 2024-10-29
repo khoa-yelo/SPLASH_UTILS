@@ -3,6 +3,7 @@ import os
 from os.path import join, basename
 import json
 import subprocess
+import shutil
 import sys
 
 PFAM_HMM = os.getenv("PFAM_HMM")
@@ -18,4 +19,9 @@ if __name__ == "__main__":
     if not os.path.exists(compactor_folder):
         print("Not running pfam as the compactor folder does not exist, Compactor = ", config["compactor_pfam"])
         sys.exit(0)
-    run_pfam(config["compactor_args"]["output_file"])
+    run_pfam(config["compactor_args"]["output_file"] + ".fasta")
+    # copy the pfam output to the compactor folder
+    shutil.copy(config["compactor_args"]["output_file"]+ ".fasta.prot.pfam", compactor_folder)
+    shutil.copy(config["compactor_args"]["output_file"]+ ".fasta.prot", compactor_folder)
+    
+

@@ -4,6 +4,8 @@ from os.path import join, basename
 import json
 import subprocess
 import sys
+import shutil
+import pandas as pd
 
 def run_compactors(fastq_files, anchor_list, output_file):
     # make parent directory of output_file if it does not exist
@@ -23,3 +25,14 @@ if __name__ == "__main__":
         print("Not running compactor as the compactor folder does not exist, Compactor = ", config["compactor_pfam"])
         sys.exit(0)
     run_compactors(config["compactor_args"]["fastq_files"], config["compactor_args"]["anchor_list"], config["compactor_args"]["output_file"])
+    # copy the compactor output to the compactor folder
+    shutil.copy(config["compactor_args"]["output_file"], compactor_folder)
+    # read the compactor output as df, get compactor column and write to fasta
+    compactor_output = config["compactor_args"]["output_file"]
+    df = pd.read_csv(compactor_output, sep="\t")
+    compactor_column = df["compactor"]
+    with open(compactor_output+".fasta", "w") as f:
+        for i, compactor in enumerate(compactor_column):
+            f.write(f">{i}\n{compactor}\n")
+    shutil.copy(compactor_output+".fasta", compactor_folder)
+    
